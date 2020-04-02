@@ -1,0 +1,31 @@
+{
+  "name": "intuitive-json-query-language",
+  "version": "1.0.0",
+  "description": "A human-readable query language implementation for being able to filter for specific JavaScript/JSON objects in an array.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/netgrafe/intuitive-json-query-language.git"
+  },
+  "keywords": [
+    "json",
+    "js",
+    "object",
+    "query",
+    "language",
+    "array",
+    "filter",
+    "human",
+    "readable",
+    "jql"
+  ],
+  "author": "Adam Graf",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/netgrafe/intuitive-json-query-language/issues"
+  },
+  "homepage": "https://github.com/netgrafe/intuitive-json-query-language#readme"
+}
