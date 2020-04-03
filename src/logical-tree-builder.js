@@ -1,4 +1,4 @@
-const { LEFT, RIGHT, SUB_EXPRESSION_PREFIX } = require('./constants');
+const { LEFT, RIGHT, SUB_EXPRESSION_PREFIX, OR, AND } = require('./constants');
 
 function findSubExpressions(queryString) {
     const foundParensPositionsAtFirstLevel = [];

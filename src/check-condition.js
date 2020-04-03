@@ -21,11 +21,11 @@ const checkerMap = {
 function evaluateCondition(objectToCheck, condition) {
     const operator = findOperator(condition);
 
-    const [ propertyPath, testedValue ] = condition.split(` ${operator} `).map(sides => sides.trim());
+    const [ propertyPath, lookupValue ] = condition.split(` ${operator} `).map(sides => sides.trim());
 
     const valueOfProperty = getValueOnPropertyPath(objectToCheck, propertyPath);
 
-    return operator && valueOfProperty && checkerMap[operator](valueOfProperty, testedValue);
+    return !!operator && !!valueOfProperty && !!lookupValue && checkerMap[operator](valueOfProperty, lookupValue);
 }
 
 module.exports = function (objectToCheck, condition) {

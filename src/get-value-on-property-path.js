@@ -20,7 +20,7 @@ function getValueOnPropertyPath(object, propertyPath) {
         if (object[firstChunk]) {
             return getValueOnPropertyPath(object[firstChunk], remainderPath)
         } else {
-            return null;
+        return null;
         }
     } else {
         return object[propertyPath] || null;
