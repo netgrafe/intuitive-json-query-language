@@ -1,5 +1,6 @@
-const { INCLUDES, NOT_INCLUDES, IS, IS_NOT, GT, LT } = require('./constants');
-const conditionCheckers = require('./condition-checkers');
+const { INCLUDES, NOT_INCLUDES, IS, IS_NOT, GT, LT }= require('./constants');
+const conditionCheckers                             = require('./condition-checkers');
+const getValueOnPropertyPath                        = require('./get-value-on-property-path');
 
 
 function findOperator(condition) {
@@ -22,14 +23,18 @@ function evaluateCondition(objectToCheck, condition) {
 
     const [ propertyPath, testedValue ] = condition.split(` ${operator} `).map(sides => sides.trim());
 
-    return operator && checkerMap[operator](objectToCheck, propertyPath, testedValue);
+    const valueOfProperty = getValueOnPropertyPath(objectToCheck, propertyPath);
+
+    return operator && valueOfProperty && checkerMap[operator](valueOfProperty, testedValue);
 }
 
 module.exports = function (objectToCheck, condition) {
     // if it is not already evaluated portion of a condition, so it is not a boolean yet
     if (typeof condition === 'string') {
         return evaluateCondition(objectToCheck, condition);
-    } else {
+    } else if (typeof condition === 'boolean') {
         return condition;
+    } else {
+        return false;
     }
 }
