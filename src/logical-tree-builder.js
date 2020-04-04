@@ -1,24 +1,39 @@
-const { LEFT, RIGHT, SUB_EXPRESSION_PREFIX, OR, AND } = require('./constants');
+const { LEFT_BR, RIGHT_BR, SUB_EXPRESSION_PREFIX, OR, AND } = require('./constants');
+
+function throwInvalidParensError(queryString, isLeft) {
+    throw new Error(`Parens are not correctly matching in query. Seems like you have too many ${isLeft ? 'left' : 'right'} braces. Please check them: ${queryString}`);
+}
 
 function findSubExpressions(queryString) {
     const foundParensPositionsAtFirstLevel = [];
     const parensStack = [];
 
     queryString.split('').forEach((char, index) => {
-        if (char === LEFT) {
+        if (char === LEFT_BR) {
             parensStack.push(index);
-        } else if (char === RIGHT) {
-            const starterPosition = parensStack.pop();
-
-            // we're not in the middle of multiple parens deeply, but closed a first level one with pop() above
+        } else if (char === RIGHT_BR) {
+            // no left brace to close with this RIGHT one
             if (parensStack.length === 0) {
-                foundParensPositionsAtFirstLevel.push({
-                    start: starterPosition,
-                    end: index
-                });
+                throwInvalidParensError(queryString, false);
+            } else {
+                const starterPosition = parensStack.pop();
+    
+                // we're not in the middle of multiple parens deeply, but closed a first level one with pop() above
+                if (parensStack.length === 0) {
+                    foundParensPositionsAtFirstLevel.push({
+                        start: starterPosition,
+                        end: index
+                    });
+                }
             }
+
         }
     });
+
+    // some LEFT brace has left
+    if (parensStack.length > 0) {
+        throwInvalidParensError(queryString, true);
+    }
 
     return foundParensPositionsAtFirstLevel.map(({ start, end }) => {
         return queryString.substring(start + 1, end);

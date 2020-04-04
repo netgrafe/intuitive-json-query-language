@@ -37,20 +37,20 @@ describe('Check Condition', () => {
 
     describe('GIVEN the defined condition is still a string to be processed', () => {
         describe('WHEN non of the operators are found', () => {
-            it('should return false', () => {
-                const result = SUT({}, 'some string without operator');
-
-                expect(result).to.be.false;
+            it('should throw no operator found error', () => {
+                expect(() => {
+                    SUT({}, 'some string without operator');
+                }).to.throw(Error, 'No operator found');
             });
         });
 
         describe('WHEN space is not left around operators', () => {
-            it('should return false', () => {
-                const result = SUT({
-                    name: 'John'
-                }, 'name ISJohn');
-
-                expect(result).to.be.false;
+            it('should throw no operator found error', () => {
+                expect(() => {
+                    SUT({
+                        name: 'John'
+                    }, 'name ISJohn');
+                }).to.throw(Error, 'No operator found');
             });
         });
 
@@ -75,7 +75,7 @@ describe('Check Condition', () => {
         });
 
         describe('WHEN lookupValue is empty', () => {
-            it('should return false', () => {
+            it('should throw no look up value error', () => {
                 // GIVEN
                 const input = {};
                 const path = 'firstname';
@@ -85,12 +85,10 @@ describe('Check Condition', () => {
 
                 getValueOnPopertyPathStub.returns(valueOnProperty);
 
-                // WHEN
-                const result = SUT(input, `${path} ${operator} ${lookUpValue}`);
-
                 // THEN
-                expect(getValueOnPopertyPathStub).to.have.been.calledWith(input, path);
-                expect(result).to.be.false;
+                expect(() => {
+                    SUT(input, `${path} ${operator} ${lookUpValue}`);
+                }).to.throw(Error, `You haven't specified what to look for in condition`);
             });
         });
 

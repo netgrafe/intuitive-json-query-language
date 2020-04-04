@@ -4,7 +4,7 @@
   "description": "A human-readable query language implementation for being able to filter for specific JavaScript/JSON objects in an array.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --inline-diffs --reporter landing",
+    "test": "mocha --inline-diffs",
     "coverage": "nyc npm run test"
   },
   "repository": {
