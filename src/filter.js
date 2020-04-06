@@ -1,30 +1,5 @@
-const { AND, OR } = require('./constants');
 const logicalTreeBuilder = require('./logical-tree-builder');
-const checkCondition = require('./check-condition');
-
-function checkCondition(objectToCheck, condition) {
-
-}
-
-function testElementForLogicalTree(element, logicalTree, operator) {
-    if (Array.isArray(logicalTree) && operator) {
-        const processed = logicalTree.map(operand => evalueate(operand));
-
-        if (operator === AND) {
-            return processed.every((condition) => checkCondition(element, condition));
-        } else if (operator === OR) {
-            return processed.some((condition) => checkCondition(element, condition));
-        }
-    } else if (typeof logicalTree === 'object') {
-        if (logicalTree.AND) {
-            return testElementForLogicalTree(logicalTree[AND], AND);
-        } else if (logicalTree.OR) {
-            return testElementForLogicalTree(logicalTree[OR], OR);
-        }
-    } else if (typeof logicalTree === 'string') {
-        return logicalTree;
-    }
-}
+const testElementForLogicalTree = require('./test-element-for-logical-tree');
 
 function testElementAgainstQuery(element, queryString) {
     const logicalTree = logicalTreeBuilder.build(queryString);
@@ -35,7 +10,7 @@ function testElementAgainstQuery(element, queryString) {
 function filter (arrayOfElements, queryString) {
     const logicalTree = logicalTreeBuilder.build(queryString);
 
-    arrayOfElements.filter(element => testElementForLogicalTree(element, logicalTree, queryString))
+    return arrayOfElements.filter(element => testElementForLogicalTree(element, logicalTree))
 }
 
 module.exports = {

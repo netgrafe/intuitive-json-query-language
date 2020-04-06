@@ -18,19 +18,32 @@ function checkExclusion(valueOnProperty, lookupValue) {
     return checkInclusion(valueOnProperty, lookupValue, true);
 }
 
-function checkEquality() {
-
+function checkEquality(valueOnProperty, lookupValue) {
+    return valueOnProperty === lookupValue;
 }
 
-function checkInequality() {
-
+function checkInequality(valueOnProperty, lookupValue) {
+    return valueOnProperty !== lookupValue;
 }
 
-function checkIfGreaterThan() {
-
+function checkIfGreaterThan(valueOnProperty, lookupValue) {
+    if (typeof valueOnProperty !== 'number') {
+        return false;
+    } else if (!Number(lookupValue)) {
+        return false;
+    } else {
+        return valueOnProperty > Number(lookupValue);
+    }
 }
 
-function checkIfLessThan() {
+function checkIfLessThan(valueOnProperty, lookupValue) {
+    if (typeof valueOnProperty !== 'number') {
+        return false;
+    } else if (!Number(lookupValue)) {
+        return false;
+    } else {
+        return valueOnProperty < Number(lookupValue);
+    }
 
 }
 
