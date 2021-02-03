@@ -76,7 +76,7 @@ function build(queryString) {
 
     // as OR is lower level operator and the last to evaluate, we break-up the term by the 'OR's first
     if (simplified.includes(` ${OR} `)) {
-        orOperands = simplified.split(` ${OR} `).map(elem => elem.trim());
+        const orOperands = simplified.split(` ${OR} `).map(elem => elem.trim());
 
         return {
             OR: orOperands.map((orOperand) => checkForAndOperands(orOperand, subExpressions))
